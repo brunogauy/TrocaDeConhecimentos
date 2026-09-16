@@ -1,6 +1,6 @@
 package br.com.mvc.model;
 
-public class Perfil {
+public class Habilidade {
 
     private Long id;
     private String nome;

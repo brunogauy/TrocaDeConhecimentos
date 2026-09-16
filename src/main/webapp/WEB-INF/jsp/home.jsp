@@ -15,7 +15,7 @@
         <nav>
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/perfis">Perfis</a>
+            <a href="${pageContext.request.contextPath}/habilidades">Habilidades</a>
         </nav>
     </div>
 </header>
@@ -30,9 +30,9 @@
             <strong>Usuarios</strong>
             <span>Listar, cadastrar, editar e excluir usuarios.</span>
         </a>
-        <a class="menu-card" href="${pageContext.request.contextPath}/perfis">
-            <strong>Perfis</strong>
-            <span>Listar, cadastrar, editar e excluir perfis.</span>
+        <a class="menu-card" href="${pageContext.request.contextPath}/habilidades">
+            <strong>Habilidades</strong>
+            <span>Listar, cadastrar, editar e excluir habilidades.</span>
         </a>
     </div>
 </main>

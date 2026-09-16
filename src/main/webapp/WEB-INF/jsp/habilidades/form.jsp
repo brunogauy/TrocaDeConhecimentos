@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         <c:choose>
-            <c:when test="${empty perfil.id}">Novo perfil</c:when>
-            <c:otherwise>Editar perfil</c:otherwise>
+            <c:when test="${empty habilidade.id}">Nova habilidade</c:when>
+            <c:otherwise>Editar habilidade</c:otherwise>
         </c:choose>
         - MVC Aula
     </title>
@@ -21,7 +21,7 @@
         <nav>
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/perfis">Perfis</a>
+            <a href="${pageContext.request.contextPath}/habilidades">Habilidades</a>
         </nav>
     </div>
 </header>
@@ -30,8 +30,8 @@
     <div class="page-header">
         <h1>
             <c:choose>
-                <c:when test="${empty perfil.id}">Novo perfil</c:when>
-                <c:otherwise>Editar perfil</c:otherwise>
+                <c:when test="${empty habilidade.id}">Nova habilidade</c:when>
+                <c:otherwise>Editar habilidade</c:otherwise>
             </c:choose>
         </h1>
     </div>
@@ -41,18 +41,18 @@
             <div class="alert alert-erro">${erro}</div>
         </c:if>
 
-        <form method="post" action="${pageContext.request.contextPath}/perfis">
+        <form method="post" action="${pageContext.request.contextPath}/habilidades">
             <input type="hidden" name="acao" value="salvar">
-            <input type="hidden" name="id" value="${perfil.id}">
+            <input type="hidden" name="id" value="${habilidade.id}">
 
             <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" value="${perfil.nome}" required>
+                <input type="text" id="nome" name="nome" value="${habilidade.nome}" required>
             </div>
 
             <div class="actions">
                 <button type="submit" class="btn">Salvar</button>
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/perfis">Cancelar</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/habilidades">Cancelar</a>
             </div>
         </form>
     </div>

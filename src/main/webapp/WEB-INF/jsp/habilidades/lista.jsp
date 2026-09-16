@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Perfis - MVC Aula</title>
+    <title>Habilidades - MVC Aula</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
 </head>
 <body>
@@ -15,15 +15,15 @@
         <nav>
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/perfis">Perfis</a>
+            <a href="${pageContext.request.contextPath}/habilidades">Habilidades</a>
         </nav>
     </div>
 </header>
 
 <main class="container">
     <div class="page-header">
-        <h1>Perfis</h1>
-        <a class="btn" href="${pageContext.request.contextPath}/perfis?acao=novo">Novo perfil</a>
+        <h1>Habilidades</h1>
+        <a class="btn" href="${pageContext.request.contextPath}/habilidades?acao=novo">Nova habilidade</a>
     </div>
 
     <c:if test="${not empty erro}">
@@ -32,8 +32,8 @@
 
     <div class="table-wrap">
         <c:choose>
-            <c:when test="${empty perfis}">
-                <p class="empty">Nenhum perfil cadastrado.</p>
+            <c:when test="${empty habilidades}">
+                <p class="empty">Nenhuma habilidade cadastrada.</p>
             </c:when>
             <c:otherwise>
                 <table>
@@ -45,14 +45,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="perfil" items="${perfis}">
+                    <c:forEach var="habilidade" items="${habilidades}">
                         <tr>
-                            <td>${perfil.id}</td>
-                            <td>${perfil.nome}</td>
+                            <td>${habilidade.id}</td>
+                            <td>${habilidade.nome}</td>
                             <td class="links">
-                                <a href="${pageContext.request.contextPath}/perfis?acao=editar&id=${perfil.id}">Editar</a>
-                                <a href="${pageContext.request.contextPath}/perfis?acao=excluir&id=${perfil.id}"
-                                   onclick="return confirm('Excluir este perfil?');">Excluir</a>
+                                <a href="${pageContext.request.contextPath}/habilidades?acao=editar&id=${habilidade.id}">Editar</a>
+                                <a href="${pageContext.request.contextPath}/habilidades?acao=excluir&id=${habilidade.id}"
+                                   onclick="return confirm('Excluir esta habilidade?');">Excluir</a>
                             </td>
                         </tr>
                     </c:forEach>
