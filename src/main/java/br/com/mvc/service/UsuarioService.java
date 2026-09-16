@@ -1,5 +1,6 @@
 package br.com.mvc.service;
 
+import br.com.mvc.dao.TrocaDAO;
 import br.com.mvc.dao.UsuarioDAO;
 import br.com.mvc.model.Usuario;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioDAO usuarioDAO;
+    private final TrocaDAO trocaDAO;
 
     public UsuarioService() {
         this.usuarioDAO = new UsuarioDAO();
+        this.trocaDAO = new TrocaDAO();
     }
 
     public List<Usuario> listar() {
@@ -60,6 +63,7 @@ public class UsuarioService {
      * Regra de exclusao:
      * - id obrigatorio
      * - usuario precisa existir
+     * - nao pode ter troca vinculada
      */
     public void deletar(Long id) {
         if (id == null) {
@@ -67,6 +71,10 @@ public class UsuarioService {
         }
         if (this.usuarioDAO.buscarPorId(id) == null) {
             throw new IllegalArgumentException("Usuario nao encontrado.");
+        }
+        if (this.trocaDAO.contarPorUsuarioId(id) > 0) {
+            throw new IllegalArgumentException(
+                    "Nao e possivel excluir: existem trocas vinculadas a este usuario.");
         }
         this.usuarioDAO.deletar(id);
     }

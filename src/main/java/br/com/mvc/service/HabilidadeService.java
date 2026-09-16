@@ -1,6 +1,7 @@
 package br.com.mvc.service;
 
 import br.com.mvc.dao.HabilidadeDAO;
+import br.com.mvc.dao.TrocaDAO;
 import br.com.mvc.model.Habilidade;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 public class HabilidadeService {
 
     private final HabilidadeDAO habilidadeDAO;
+    private final TrocaDAO trocaDAO;
 
     public HabilidadeService() {
         this.habilidadeDAO = new HabilidadeDAO();
+        this.trocaDAO = new TrocaDAO();
     }
 
     public List<Habilidade> listar() {
@@ -60,6 +63,7 @@ public class HabilidadeService {
      * Regra de exclusao:
      * - id obrigatorio
      * - habilidade precisa existir
+     * - nao pode ter troca vinculada
      */
     public void deletar(Long id) {
         if (id == null) {
@@ -67,6 +71,10 @@ public class HabilidadeService {
         }
         if (this.habilidadeDAO.buscarPorId(id) == null) {
             throw new IllegalArgumentException("Habilidade nao encontrada.");
+        }
+        if (this.trocaDAO.contarPorHabilidadeId(id) > 0) {
+            throw new IllegalArgumentException(
+                    "Nao e possivel excluir: existem trocas vinculadas a esta habilidade.");
         }
         this.habilidadeDAO.deletar(id);
     }

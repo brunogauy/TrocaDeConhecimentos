@@ -94,6 +94,32 @@ public class TrocaDAO extends MysqlDAO {
         }
     }
 
+    public long contarPorUsuarioId(Long usuarioId) {
+        String sql =
+                "SELECT COUNT(*) FROM trocas "
+                        + "WHERE usuario_oferecendo_id = ? OR usuario_interessado_id = ?";
+        try (ResultSet rs = super.executar(sql, usuarioId, usuarioId)) {
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao contar trocas por usuario.", e);
+        }
+        return 0;
+    }
+
+    public long contarPorHabilidadeId(Long habilidadeId) {
+        String sql = "SELECT COUNT(*) FROM trocas WHERE habilidade_id = ?";
+        try (ResultSet rs = super.executar(sql, habilidadeId)) {
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao contar trocas por habilidade.", e);
+        }
+        return 0;
+    }
+
     private Troca mapear(ResultSet rs) throws SQLException {
         Troca troca = new Troca();
         troca.setId(rs.getLong("id"));
