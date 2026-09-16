@@ -22,7 +22,6 @@
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
             <a href="${pageContext.request.contextPath}/perfis">Perfis</a>
-            <a href="${pageContext.request.contextPath}/logout">Sair</a>
         </nav>
     </div>
 </header>
@@ -52,26 +51,8 @@
             </div>
 
             <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" id="login" name="login" value="${usuario.login}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="text" id="senha" name="senha" value="${usuario.senha}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="perfilId">Perfil</label>
-                <select id="perfilId" name="perfilId" required>
-                    <option value="">Selecione</option>
-                    <c:forEach var="perfil" items="${perfis}">
-                        <option value="${perfil.id}"
-                                <c:if test="${usuario.perfilId == perfil.id}">selected</c:if>>
-                            ${perfil.nome}
-                        </option>
-                    </c:forEach>
-                </select>
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="${usuario.email}" required>
             </div>
 
             <div class="actions">

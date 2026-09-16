@@ -16,7 +16,6 @@
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
             <a href="${pageContext.request.contextPath}/perfis">Perfis</a>
-            <a href="${pageContext.request.contextPath}/logout">Sair</a>
         </nav>
     </div>
 </header>
@@ -42,8 +41,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Login</th>
-                        <th>Perfil</th>
+                        <th>Email</th>
                         <th>Acoes</th>
                     </tr>
                     </thead>
@@ -52,8 +50,7 @@
                         <tr>
                             <td>${usuario.id}</td>
                             <td>${usuario.nome}</td>
-                            <td>${usuario.login}</td>
-                            <td>${usuario.perfil.nome}</td>
+                            <td>${usuario.email}</td>
                             <td class="links">
                                 <a href="${pageContext.request.contextPath}/usuarios?acao=editar&id=${usuario.id}">Editar</a>
                                 <a href="${pageContext.request.contextPath}/usuarios?acao=excluir&id=${usuario.id}"

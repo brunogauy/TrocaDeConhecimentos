@@ -1,7 +1,6 @@
 package br.com.mvc.service;
 
 import br.com.mvc.dao.PerfilDAO;
-import br.com.mvc.dao.UsuarioDAO;
 import br.com.mvc.model.Perfil;
 
 import java.util.List;
@@ -15,11 +14,9 @@ import java.util.List;
 public class PerfilService {
 
     private final PerfilDAO perfilDAO;
-    private final UsuarioDAO usuarioDAO;
 
     public PerfilService() {
         this.perfilDAO = new PerfilDAO();
-        this.usuarioDAO = new UsuarioDAO();
     }
 
     public List<Perfil> listar() {
@@ -63,7 +60,6 @@ public class PerfilService {
      * Regra de exclusao:
      * - id obrigatorio
      * - perfil precisa existir
-     * - nao pode excluir perfil que ainda tem usuarios vinculados
      */
     public void deletar(Long id) {
         if (id == null) {
@@ -71,9 +67,6 @@ public class PerfilService {
         }
         if (this.perfilDAO.buscarPorId(id) == null) {
             throw new IllegalArgumentException("Perfil nao encontrado.");
-        }
-        if (this.usuarioDAO.contarPorPerfil(id) > 0) {
-            throw new IllegalArgumentException("Nao e possivel excluir perfil com usuarios vinculados.");
         }
         this.perfilDAO.deletar(id);
     }

@@ -1,6 +1,5 @@
 package br.com.mvc.dao;
 
-import br.com.mvc.model.Perfil;
 import br.com.mvc.model.Usuario;
 
 import java.sql.ResultSet;
@@ -20,32 +19,12 @@ public class UsuarioDAO extends MysqlDAO {
         super();
     }
 
-    public Usuario buscarPorLoginESenha(String login, String senha) {
-        String sql =
-                "SELECT u.id, u.nome, u.login, u.senha, u.perfil_id, p.nome AS perfil_nome "
-                        + "FROM usuarios u "
-                        + "INNER JOIN perfis p ON p.id = u.perfil_id "
-                        + "WHERE u.login = ? AND u.senha = ?";
-        try (ResultSet rs = super.executar(sql, login, senha)) {
-            if (rs.next()) {
-                return this.mapearComPerfil(rs);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar usuario.", e);
-        }
-        return null;
-    }
-
     public List<Usuario> listarTodos() {
-        String sql =
-                "SELECT u.id, u.nome, u.login, u.senha, u.perfil_id, p.nome AS perfil_nome "
-                        + "FROM usuarios u "
-                        + "INNER JOIN perfis p ON p.id = u.perfil_id "
-                        + "ORDER BY u.nome";
+        String sql = "SELECT id, nome, email FROM usuarios ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         try (ResultSet rs = super.executar(sql)) {
             while (rs.next()) {
-                lista.add(this.mapearComPerfil(rs));
+                lista.add(this.mapear(rs));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar usuarios.", e);
@@ -54,14 +33,10 @@ public class UsuarioDAO extends MysqlDAO {
     }
 
     public Usuario buscarPorId(Long id) {
-        String sql =
-                "SELECT u.id, u.nome, u.login, u.senha, u.perfil_id, p.nome AS perfil_nome "
-                        + "FROM usuarios u "
-                        + "INNER JOIN perfis p ON p.id = u.perfil_id "
-                        + "WHERE u.id = ?";
+        String sql = "SELECT id, nome, email FROM usuarios WHERE id = ?";
         try (ResultSet rs = super.executar(sql, id)) {
             if (rs.next()) {
-                return this.mapearComPerfil(rs);
+                return this.mapear(rs);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar por id.", e);
@@ -69,58 +44,31 @@ public class UsuarioDAO extends MysqlDAO {
         return null;
     }
 
-    public Usuario buscarPorLogin(String login) {
-        String sql =
-                "SELECT u.id, u.nome, u.login, u.senha, u.perfil_id, p.nome AS perfil_nome "
-                        + "FROM usuarios u "
-                        + "INNER JOIN perfis p ON p.id = u.perfil_id "
-                        + "WHERE u.login = ?";
-        try (ResultSet rs = super.executar(sql, login)) {
+    public Usuario buscarPorEmail(String email) {
+        String sql = "SELECT id, nome, email FROM usuarios WHERE email = ?";
+        try (ResultSet rs = super.executar(sql, email)) {
             if (rs.next()) {
-                return this.mapearComPerfil(rs);
+                return this.mapear(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar por login.", e);
+            throw new RuntimeException("Erro ao buscar por email.", e);
         }
         return null;
     }
 
-    public int contarPorPerfil(Long perfilId) {
-        String sql = "SELECT COUNT(*) AS total FROM usuarios WHERE perfil_id = ?";
-        try (ResultSet rs = super.executar(sql, perfilId)) {
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao contar usuarios por perfil.", e);
-        }
-        return 0;
-    }
-
     public void inserir(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nome, login, senha, perfil_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
         try {
-            super.executarUpdate(
-                    sql,
-                    usuario.getNome(),
-                    usuario.getLogin(),
-                    usuario.getSenha(),
-                    usuario.getPerfilId());
+            super.executarUpdate(sql, usuario.getNome(), usuario.getEmail());
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir.", e);
         }
     }
 
     public void alterar(Usuario usuario) {
-        String sql = "UPDATE usuarios SET nome = ?, login = ?, senha = ?, perfil_id = ? WHERE id = ?";
+        String sql = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
         try {
-            super.executarUpdate(
-                    sql,
-                    usuario.getNome(),
-                    usuario.getLogin(),
-                    usuario.getSenha(),
-                    usuario.getPerfilId(),
-                    usuario.getId());
+            super.executarUpdate(sql, usuario.getNome(), usuario.getEmail(), usuario.getId());
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao alterar.", e);
         }
@@ -135,19 +83,11 @@ public class UsuarioDAO extends MysqlDAO {
         }
     }
 
-    private Usuario mapearComPerfil(ResultSet rs) throws SQLException {
+    private Usuario mapear(ResultSet rs) throws SQLException {
         Usuario usuario = new Usuario();
         usuario.setId(rs.getLong("id"));
         usuario.setNome(rs.getString("nome"));
-        usuario.setLogin(rs.getString("login"));
-        usuario.setSenha(rs.getString("senha"));
-        usuario.setPerfilId(rs.getLong("perfil_id"));
-
-        Perfil perfil = new Perfil();
-        perfil.setId(rs.getLong("perfil_id"));
-        perfil.setNome(rs.getString("perfil_nome"));
-        usuario.setPerfil(perfil);
-
+        usuario.setEmail(rs.getString("email"));
         return usuario;
     }
 }

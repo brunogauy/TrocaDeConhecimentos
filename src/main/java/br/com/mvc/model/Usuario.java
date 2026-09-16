@@ -4,10 +4,7 @@ public class Usuario {
 
     private Long id;
     private String nome;
-    private String login;
-    private String senha;
-    private Long perfilId;
-    private Perfil perfil;
+    private String email;
 
     public Long getId() {
         return id;
@@ -25,35 +22,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Long getPerfilId() {
-        return perfilId;
-    }
-
-    public void setPerfilId(Long perfilId) {
-        this.perfilId = perfilId;
-    }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
