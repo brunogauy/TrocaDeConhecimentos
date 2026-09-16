@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Habilidades - MVC Aula</title>
+    <title>Trocas - MVC Aula</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
 </head>
 <body>
@@ -23,8 +23,8 @@
 
 <main class="container">
     <div class="page-header">
-        <h1>Habilidades</h1>
-        <a class="btn" href="${pageContext.request.contextPath}/habilidades?acao=novo">Nova habilidade</a>
+        <h1>Trocas</h1>
+        <a class="btn" href="${pageContext.request.contextPath}/trocas?acao=novo">Nova troca</a>
     </div>
 
     <c:if test="${not empty erro}">
@@ -33,27 +33,31 @@
 
     <div class="table-wrap">
         <c:choose>
-            <c:when test="${empty habilidades}">
-                <p class="empty">Nenhuma habilidade cadastrada.</p>
+            <c:when test="${empty trocas}">
+                <p class="empty">Nenhuma troca cadastrada.</p>
             </c:when>
             <c:otherwise>
                 <table>
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
+                        <th>Oferece</th>
+                        <th>Interessado</th>
+                        <th>Habilidade</th>
                         <th>Acoes</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="habilidade" items="${habilidades}">
+                    <c:forEach var="troca" items="${trocas}">
                         <tr>
-                            <td>${habilidade.id}</td>
-                            <td>${habilidade.nome}</td>
+                            <td>${troca.id}</td>
+                            <td>${troca.usuarioOferecendo.nome}</td>
+                            <td>${troca.usuarioInteressado.nome}</td>
+                            <td>${troca.habilidade.nome}</td>
                             <td class="links">
-                                <a href="${pageContext.request.contextPath}/habilidades?acao=editar&id=${habilidade.id}">Editar</a>
-                                <a href="${pageContext.request.contextPath}/habilidades?acao=excluir&id=${habilidade.id}"
-                                   onclick="return confirm('Excluir esta habilidade?');">Excluir</a>
+                                <a href="${pageContext.request.contextPath}/trocas?acao=editar&id=${troca.id}">Editar</a>
+                                <a href="${pageContext.request.contextPath}/trocas?acao=excluir&id=${troca.id}"
+                                   onclick="return confirm('Excluir esta troca?');">Excluir</a>
                             </td>
                         </tr>
                     </c:forEach>

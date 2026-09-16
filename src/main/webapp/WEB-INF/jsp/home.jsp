@@ -16,6 +16,7 @@
             <a href="${pageContext.request.contextPath}/home">Home</a>
             <a href="${pageContext.request.contextPath}/usuarios">Usuarios</a>
             <a href="${pageContext.request.contextPath}/habilidades">Habilidades</a>
+            <a href="${pageContext.request.contextPath}/trocas">Trocas</a>
         </nav>
     </div>
 </header>
