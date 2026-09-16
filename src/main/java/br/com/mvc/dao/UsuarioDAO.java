@@ -20,7 +20,7 @@ public class UsuarioDAO extends MysqlDAO {
     }
 
     public List<Usuario> listarTodos() {
-        String sql = "SELECT id, nome, email FROM usuarios ORDER BY nome";
+        String sql = "SELECT id, nome, email FROM usuarios ORDER BY id";
         List<Usuario> lista = new ArrayList<>();
         try (ResultSet rs = super.executar(sql)) {
             while (rs.next()) {
