@@ -4,6 +4,8 @@ CREATE DATABASE IF NOT EXISTS mvc_java
 
 USE mvc_java;
 
+SET NAMES utf8mb4;
+
 -- =========================================
 -- TABELA DE USUÁRIOS
 -- =========================================

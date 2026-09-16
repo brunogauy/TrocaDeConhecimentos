@@ -35,6 +35,10 @@
             <strong>Habilidades</strong>
             <span>Listar, cadastrar, editar e excluir habilidades.</span>
         </a>
+        <a class="menu-card" href="${pageContext.request.contextPath}/trocas">
+            <strong>Trocas</strong>
+            <span>Listar, cadastrar, editar e excluir trocas.</span>
+        </a>
     </div>
 </main>
 </body>
