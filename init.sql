@@ -5,69 +5,78 @@ CREATE DATABASE IF NOT EXISTS mvc_java
 USE mvc_java;
 
 -- =========================================
--- TABELA DE PERFIS
--- =========================================
-
-CREATE TABLE perfis (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-
-    PRIMARY KEY (id)
-);
-
--- =========================================
 -- TABELA DE USUÁRIOS
 -- =========================================
 
 CREATE TABLE usuarios (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(150) NOT NULL,
-    login VARCHAR(100) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    perfil_id BIGINT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
 
-    PRIMARY KEY (id),
+-- =========================================
+-- TABELA DE HABILIDADES
+-- =========================================
 
-    CONSTRAINT uk_usuario_login
-        UNIQUE (login),
+CREATE TABLE habilidades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
 
-    CONSTRAINT fk_usuario_perfil
-        FOREIGN KEY (perfil_id)
-        REFERENCES perfis(id)
+-- =========================================
+-- TABELA DE TROCAS
+-- =========================================
+
+CREATE TABLE trocas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_oferecendo_id INT,
+    usuario_interessado_id INT,
+    habilidade_id INT,
+    FOREIGN KEY (usuario_oferecendo_id) REFERENCES usuarios(id),
+    FOREIGN KEY (usuario_interessado_id) REFERENCES usuarios(id),
+    FOREIGN KEY (habilidade_id) REFERENCES habilidades(id)
 );
 
 -- =========================================
 -- DADOS PARA TESTE
 -- =========================================
 
-INSERT INTO perfis (nome)
+INSERT INTO usuarios (nome, email)
 VALUES
-    ('Administrador'),
-    ('Professor'),
-    ('Aluno');
+    ('João Silva', 'joao@email.com'),
+    ('Maria Souza', 'maria@email.com'),
+    ('Pedro Santos', 'pedro@email.com');
 
-INSERT INTO usuarios (
-    nome,
-    login,
-    senha,
-    perfil_id
+INSERT INTO habilidades (nome)
+VALUES
+    ('Java'),
+    ('Ingles'),
+    ('Design Grafico');
+
+INSERT INTO trocas (
+    usuario_oferecendo_id,
+    usuario_interessado_id,
+    habilidade_id
 )
 VALUES
-    ('Administrador do Sistema', 'admin', '123456', 1),
-    ('João Professor', 'joao', '123456', 2),
-    ('Maria Aluna', 'maria', '123456', 3);
-
+    (1, 2, 1),
+    (2, 3, 2),
+    (3, 1, 3);
 
 -- =========================================
 -- CONSULTA DE EXEMPLO
 -- =========================================
 
 SELECT
-    u.id,
-    u.nome,
-    u.login,
-    p.nome AS perfil
-FROM usuarios u
-INNER JOIN perfis p
-    ON p.id = u.perfil_id
-ORDER BY u.nome;
+    t.id,
+    uo.nome AS oferece,
+    ui.nome AS interessado,
+    h.nome AS habilidade
+FROM trocas t
+INNER JOIN usuarios uo
+    ON uo.id = t.usuario_oferecendo_id
+INNER JOIN usuarios ui
+    ON ui.id = t.usuario_interessado_id
+INNER JOIN habilidades h
+    ON h.id = t.habilidade_id
+ORDER BY t.id;
