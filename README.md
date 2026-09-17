@@ -114,5 +114,4 @@ TrocaConhecimentos/
 ```
 
 ## ✅ Observações
-- O sistema não possui autenticação nem controle de sessão, já que o tema proposto pedia apenas o CRUD das entidades, sem login.
 - O Docker automatiza a inicialização do banco de dados (MySQL, via `init.sql`) e do servidor de aplicação (Tomcat), bastando rodar `docker-compose up -d` após gerar o `.war`.
